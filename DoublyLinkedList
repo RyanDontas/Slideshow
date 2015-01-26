@@ -1,0 +1,139 @@
+// Ryan Dontas
+
+
+
+public class DoublyLinkedList<T> implements OrderedListADT<T>{
+	private DoubleNode<T> head, tail, current;
+	private int size;
+	
+	public DoublyLinkedList() {
+		head = new DoubleNode<T>();
+		tail = new DoubleNode<T>();
+		head.setNext(tail);
+		tail.setPrev(head);
+		current = null;
+		size = 0;
+	}
+	
+	public void addToFront(T element) {
+		DoubleNode<T> lead = new DoubleNode<T>(element);
+		DoubleNode<T> headnext = head.getNext();
+		headnext.setPrev(lead);
+		lead.setNext(headnext);
+		head.setNext(lead);
+		lead.setPrev(head);
+		current = lead;
+		size++;
+	}
+	
+	
+	public void addToRear(T element) {
+		DoubleNode<T> end = new DoubleNode<T>(element);
+			end.setPrev(tail.getPrev());
+			end.setNext(tail);
+			tail.getPrev().setNext(end);
+			tail.setPrev(end);
+			current = end;
+			size++;
+		
+	}
+	
+	
+	public void removeCurrent() {
+		if (size ==  1) {
+			head.setNext(tail);
+			tail.setPrev(head);
+			current = null;
+			size--;
+			return;
+		}
+		else {
+			DoubleNode<T> temp = current.getPrev();
+			temp.setNext(current.getNext());
+			current.getNext().setPrev(temp);
+			size--;
+		if (temp == head) {
+			current = temp.getNext();
+			return;
+		}
+		if (temp.getNext() == tail) {
+			current = temp;
+			return;
+		}
+		current = temp;
+	}
+	}
+	
+	public T first() {
+		if (current == null){ return null;}
+		while (current.getPrev() != head)
+			current = current.getPrev();
+		return current.getElement();
+	}
+	
+	public T last() {
+		if (current == null) { return null;}
+		while (current.getNext() != tail)
+			current = current.getNext();
+		return current.getElement();
+	}
+	
+	public T current() {
+		if (current == null){
+			return null;
+		}
+		else {
+			return current.getElement();
+		}
+	}
+	
+	public T next() {
+		if (size == 1 || current.getNext() == tail) {
+			return current.getElement();
+		}
+		if (current == null) {
+			return null;
+		}
+		else {
+		current = current.getNext();
+		return current.getElement();
+		}
+	}
+	
+	public T prev() {
+		if (size == 1 || current.getPrev() == head) {
+			return current.getElement();
+		}
+		if (current == null) {
+			return null;
+		}
+		else {
+		current = current.getPrev();
+		return current.getElement();
+		}
+	}
+	
+	public boolean isEmpty() {
+		if (size == 0) {
+			return true;
+		}
+		return false;
+	}
+	
+	public int size() {
+		return size;
+	}
+
+	
+	public void removeFirst() {
+		return;
+	}
+
+	
+	public void removeLast() {
+		return;
+	}
+	
+	
+
+}
