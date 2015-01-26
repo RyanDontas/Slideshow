@@ -1,0 +1,14 @@
+public interface OrderedListADT<T> {
+    public void addToFront(T element);  // Add a new element to beginning of list
+    public void addToRear(T element);   // Add a new element to end of list
+    public void removeFirst();          // Remove the first element on the list; quiet if none
+    public void removeLast();           // Remove last element from list; quiet if none
+    public void removeCurrent();        // Remove the current element, quiet if none
+    public T first();                   // Return the first element on the list, null if none
+    public T last();                    // Return the last element on the list, null if none
+    public T current();                 // Return the current item on the list, null if none
+    public T next();                    // Return the next item after current, current if none
+    public T prev();                    // Return the previous item before current, current if none
+    public boolean isEmpty();
+    public int size();                  // Number of elements currently on list, may be zero
+}
