@@ -1,0 +1,149 @@
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
+
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+
+
+public class Slideshow<T> extends JFrame implements ActionListener {
+
+	private DoublyLinkedList<ImageIcon> list = new DoublyLinkedList<ImageIcon>();
+
+	
+	
+	private JButton first;
+	private JButton prev;
+	private JButton delete;
+	private JButton next;
+	private JButton last;
+	private JButton addtofront;
+	private JButton addtoback;
+	private JLabel label = new JLabel();
+	private JFrame frame = new JFrame("Doubly Linked List");
+	private JFileChooser fileChooser = new JFileChooser();
+	
+	private ImageIcon getNewImage() {
+        ImageIcon icon = null;
+        int retVal = fileChooser.showOpenDialog(frame);
+        if (retVal == JFileChooser.APPROVE_OPTION){
+            File imageFile = fileChooser.getSelectedFile();
+            icon = new ImageIcon(imageFile.getAbsolutePath());
+            System.out.println(imageFile.getAbsolutePath());
+        }
+        return icon;
+    }
+	
+	
+	public Slideshow() {
+		
+		JPanel panel = new JPanel();
+		panel.setBackground(Color.GREEN);
+		JPanel panel2 = new JPanel();
+		panel2.setBackground(Color.GREEN);
+		JPanel panel3 = new JPanel();
+		panel3.setBackground(Color.GREEN);
+		
+		frame.add(panel, BorderLayout.NORTH);
+		frame.add(panel2, BorderLayout.CENTER);
+		frame.add(panel3, BorderLayout.SOUTH);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		first = new JButton("First");
+		prev = new JButton("Previous");
+		delete = new JButton("Delete");
+		next = new JButton("Next");
+		last = new JButton("Last");
+		
+		panel.add(first);
+		panel.add(prev);
+		panel.add(delete);
+		panel.add(next);
+		panel.add(last);
+		
+		addtofront = new JButton("Add to Front");
+		addtoback = new JButton("Add to Back");
+		panel3.add(addtofront);
+		panel3.add(addtoback);
+		
+		panel2.add(label, BorderLayout.CENTER);
+		
+		
+		
+		
+		frame.setVisible(true);
+		frame.pack();
+		
+		first.addActionListener(this);
+		prev.addActionListener(this);
+		delete.addActionListener(this);
+		next.addActionListener(this);
+		last.addActionListener(this);
+		addtofront.addActionListener(this);
+		addtoback.addActionListener(this);
+	
+	}
+
+	
+	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == first) {
+			ImageIcon a = list.first();
+			label.setIcon(a);
+			frame.pack();
+			return;
+		}
+		if (e.getSource() == prev) {
+			ImageIcon a = list.prev();
+			label.setIcon(a);
+			frame.pack();
+			return;
+		}
+		if (e.getSource() == delete) {
+			list.removeCurrent();
+			ImageIcon a = list.current();
+			label.setIcon(a);
+			frame.pack();
+			return;
+		}
+		if (e.getSource() == next) {
+			ImageIcon a = list.next();
+			label.setIcon(a);
+			frame.pack();
+			return;
+		}
+		if (e.getSource() == last) {
+			ImageIcon a = list.last();
+			label.setIcon(a);
+			frame.pack();
+			return;
+		}
+		if (e.getSource() == addtofront) {
+			ImageIcon element = getNewImage();
+			list.addToFront(element);
+			label.setIcon(element);
+			frame.pack();
+			return;
+		}
+		if (e.getSource() == addtoback) {
+			ImageIcon element = getNewImage();
+			list.addToRear(element);
+			label.setIcon(element);
+			frame.pack();
+			return;
+		}
+	}
+	
+	
+	
+	public static void main (String[] args) {
+		new Slideshow();
+	}
+	
+}
